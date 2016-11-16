@@ -1,0 +1,227 @@
+
+<div class="row">
+    <div class="col-xs-12">
+
+        <div class="breadcrumbs" id="breadcrumbs">
+            <!-- #section:basics/content.searchbox -->
+            <div class="nav-search width-40" id="nav-search">
+                <span class="input-icon width-100">
+                    <input type="text" placeholder="登录名、显示名、拼音码" class=" nav-search-input width-80" id="userName" autocomplete="off" onkeypress="javascript: if (event.keyCode == 13) { $('#table_user').dataTable().fnDraw(false); }">
+                    <i class="ace-icon nav-search-icon  fa fa-search "></i>
+                </span>
+            </div><!-- /.nav-search -->
+        </div>
+
+        <div class="widget-box widget-color-blue3 no-border">
+            <div class="widget-header btn-info">
+                <h5 class="widget-title">
+                    <i class="ace-icon fa  fa-users"></i>
+                    用户
+                </h5>
+
+                <div class="widget-toolbar">
+
+                    <a href="#" data-action="reload" onclick="javascript: $('#table_user').dataTable().fnDraw(false);">
+                        <i class="ace-icon fa fa-refresh"></i>
+                    </a>
+                </div>
+
+                <div class="widget-toolbar no-border">
+                        <a href="#" data-action="new" onclick='showEdit(0)'>
+                            <i class="ace-icon fa fa-plus white">&nbsp;</i><span class="white">添加</span>
+                        </a>
+                </div>
+
+            </div>
+            <div class="widget-body">
+
+                <div>
+                    <table id="table_user" class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>显示名称</th>
+                                <th>登录名称</th>
+                                <th>电子邮件</th>
+                                <th>角色</th>
+                                <th>失效日期</th>
+                                <th>状态</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="6" class="dataTables_empty">数据加载中...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="hide" id="dialogModal"><h1>title</h1></div>
+    </div>
+    <!-- /.modal -->
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+var columns = [
+        {
+            "mData": "ID",
+            "bSortable": true,
+            "width": "5%"
+        },
+        {
+            "mData": "DisplayName",
+            "bSortable": true,
+            "width": "10%"
+        },
+        {
+            "mData": "LoginName",
+            "bSortable": false,
+            "width": "10%"
+        },
+        {
+            "mData": "Email",
+            "bSortable": false,
+            "width": "10%"
+        },
+        {
+            "mData": "Roles",
+            "bSortable": false,
+            "width": ""
+        },
+        {
+            "mData": "AccountExpirationDate",
+            "bSortable": true,
+            "width": "10%",
+            "mRender": function(data, type, full)
+            {
+                var startValue = jsonDateFormat(data,
+                    "yyyy-MM-dd");
+   
+                return startValue; 
+            }
+        },
+        {
+            "mData": "RecordStatus",
+            "mTitle": "状态",
+            "bSortable": true,
+            "width": "10%",
+            "mRender": function(data, type, full)
+            {
+                var sOut = '';
+                if (data == "0")
+                {
+                    sOut +=
+                        '<span class="label label-info arrowed arrowed-in-right">正常</span>';
+                }
+                else if (data == "-1")
+                {
+                    sOut +=
+                        '<span class="label label-danger arrowed arrowed-in-right">已删除</span>';
+                }
+                return sOut;
+            }
+        },
+        {
+            "mData": "ID",
+            "mTitle": "",
+            "bSortable": false,
+            "width": "15%",
+            "mRender": function(data, type, full)
+            {
+                return genButton(data);
+            }
+        }];
+        var url = "/system/users/list/json";
+        $("#table_user").dataTable({
+            "iDisplayLength": 15,
+            "aLengthMenu": [[15, 20, 25, 50, 100], [15, 20, 25, 50, 100]],
+            "bAutoWidth": true,
+            "bServerSide": true,
+            "sAjaxSource": url,
+            "sServerMethod": "POST",
+            "fnServerParams": function (aoData) {
+
+                var data = { "UserName": $("#userName").val() };
+                aoData.push({ "name": "extPara", "value": json2str(data) });
+            },
+            "aoColumns": columns,
+            "bFilter": false,
+            "bInfo": false,
+            "bProcessing": false,
+            "sDom": "<'top'f>rt<'row'<'col-sm-6'l><'col-sm-6'p>>",
+            "oLanguage": {
+                "sLengthMenu": "每页 _MENU_ 条",
+                "sZeroRecords": "没有数据",
+                "sSearch": "查找",
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "前一页",
+                    "sNext": "后一页",
+                    "sLast": "尾页"
+                }
+            }
+        });
+
+    });
+    function showEdit(id) {
+        var url = '/system/user/edit/' + id;
+        var opt = {
+            url: url,
+            title: '用户编辑',
+            btns: [
+                {
+                    "text": "保存并关闭",
+                    "class": "btn btn-success",
+                    "click": function () {
+                        submitEvent(false);
+                    }
+                }
+            ]
+        };
+        $.ui.easydialog(opt).showDialog()
+    }
+    function showChenagePwd(id) {
+        var url = '/system/user/changepwd/' + id;
+        var opt = {
+            url: url,
+            title: '用户密码',
+            btns: [
+                {
+                    "text": "保存并关闭",
+                    "class": "btn btn-success",
+                    "click": function () {
+                        submitEvent(false);
+                    }
+                }
+            ]
+        };
+        $.ui.easydialog(opt).showDialog()
+    }
+
+    function showView(id){
+        var url="/system/user/view/" +id ;
+        $.ui.easydialog({url:url,title:'用户信息'}).showDialog();return false;
+    }
+    function doRemove(id){
+        //var url = "";
+        var url="/system/user/delete/" +id ;
+        confirm_refresh_datatable("确认", "确认要删除信息吗？", url,"#table_user");
+    }
+    function genButton(id){
+        var result=[];
+        result.push('<div class="hidden-sm hidden-xs btn-group">')
+        result.push('<button class="btn btn-xs btn-info" onclick="showEdit('+id+')"><i class="ace-icon fa fa-pencil bigger-120"></i></button>');
+        result.push('<button class="btn btn-xs btn-danger" onclick="doRemove('+id+')"><i class="ace-icon fa fa-trash-o bigger-120"></i></button>');
+        result.push('<button class="btn btn-xs btn-warning" onclick="showView('+id+')"><i class="ace-icon fa fa-flag bigger-120"></i></button>');
+        result.push('<button class="btn btn-xs btn-success" onclick="showChenagePwd('+id+')"><i class="ace-icon fa fa-key bigger-120"></i></button>');
+        result.push('</div>');
+        return result.join('');
+    }
+</script>
+
+
+

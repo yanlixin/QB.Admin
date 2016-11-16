@@ -1,0 +1,247 @@
+<div class="widget-box">
+    <div class="widget-header widget-header-blue widget-header-flat">
+        <h4>
+            <%.Model.DisplayName%>
+            <small class="red">
+                <i class="ace-icon fa fa-angle-double-right"></i>
+                若不修改密码，请勿在密码栏输入任何内容!
+            </small>
+        </h4>
+    </div>
+    <div class="widget-body">
+        <div class="widget-main">
+
+            <form class="form-horizontal" id="validation-form" method="POST">
+                <input type="hidden" name="ID" value="<%.Model.ID%>" />
+                <div class="form-group group">
+                    <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="employee">关联员工:</label>
+
+                    <div class="col-xs-12 col-sm-4">
+                        <div class="clearfix">
+                            <select class="input-medium" id="employee" name="employee" data-placeholder="请选择员工">
+                                <option value="">--select--</option>
+                                <option value="linux">张辽</option>
+                                <option value="windows">王国</option>
+                                <option value="mac">常军</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="group">
+                        <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="LoginName">登录名称:</label>
+
+                        <div class="col-xs-12 col-sm-4">
+                            <div class="clearfix">
+                                <input type="text" name="LoginName" id="LoginName" value="<%.Model.LoginName%>"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="group">
+                        <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="DisplayName">显示名称:</label>
+
+                        <div class="col-xs-12 col-sm-4">
+                            <div class="clearfix">
+                                <input type="text" name="DisplayName" id="DisplayName" value="<%.Model.DisplayName%>"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <% if false %>
+                <div class="form-group ">
+                    <div class="group">
+                        <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="Password">密码:</label>
+
+                        <div class="col-xs-12 col-sm-4">
+                            <div class="clearfix">
+                                <input type="password" name="Password" id="Password" value="<%.Model.Password%>" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <div class="group">
+                        <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="password_confirm">确认密码:</label>
+
+                        <div class="col-xs-12 col-sm-4">
+                            <div class="clearfix">
+                                <input type="password" name="password_confirm" id="password_confirm" value="" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <% end %>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label no-padding-right">失效日期:</label>
+                    <div class="col-xs-12 col-sm-4">
+                        <div class="input-medium">
+                            <div class="input-group">
+                                <input type="hidden" id="date2"  name="AccountExpirationDate" value="<%.Model.AccountExpirationDate%>" />
+                                <input class="input-medium date-picker" id="date1" 
+                                type="text" data-date-format="yyyy-mm-dd" value="<% date .Model.AccountExpirationDate "Y-m-d" %>"
+                                placeholder="yyyy-mm-dd">
+                                <span class="input-group-addon">
+                                    <i class="ace-icon fa fa-calendar"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label no-padding-right"></label>
+                    <div class="col-xs-12 col-sm-4">
+                        <label>
+                            <input name="MustChangePwd" id="MustChangePwd" type="checkbox" class="ace" <%.Model.MustChangePwd%> />
+			    <span class="lbl">下次登录必须修改密码</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="space-2"></div>
+            </form>
+
+        </div>
+        <!-- /.widget-main -->
+    </div>
+    <!-- /.widget-body -->
+</div>
+<script>
+    jQuery(function($)
+    {
+        $('.date-picker').datepicker({
+            autoclose: true,
+            todayHighlight: true
+        })
+        //show datepicker when clicking on the icon
+        .next().on(ace.click_event, function () {
+            $(this).prev().focus();
+        });
+
+        $('#validation-form').validate(
+        {
+            errorElement: 'div',
+            errorClass: 'help-block',
+            focusInvalid: false,
+            ignore: "",
+            rules:
+            {
+                LoginName:
+                {
+                    required: true,
+                    maxlength: 50,
+                },
+                Password:
+                {
+                    minlength: 6,
+                    maxlength: 20,
+                },
+                password_confirm:
+                {
+                    equalTo: "#Password"
+                },
+                DisplayName:
+                {
+                    required: true,
+                }
+            },
+            messages:
+            {
+                LoginName:
+                {
+                    required: "必须输入用户名.",
+                    maxlength: "用户名最多只能输入50个字符.",
+                },
+                Password:
+                {
+                    maxlength: "密码长度在6-20个字符之间.",
+                    minlength: "密码长度在6-20个字符之间.",
+                },
+                password_confirm:
+                {
+                    equalTo: "两次填写的密码不一致"
+                },
+                DisplayName: "必须输入姓名."
+            },
+
+
+            highlight: function(e)
+            {
+                $(e).closest('.group').removeClass(
+                    'has-info').addClass('has-error');
+            },
+
+            success: function(e)
+            {
+                $(e).closest('.group').removeClass(
+                    'has-error'); //.addClass('has-info');
+                $(e).remove();
+            },
+
+            errorPlacement: function(error, element)
+            {
+                if (element.is('input[type=checkbox]') ||
+                    element.is('input[type=radio]'))
+                {
+                    var controls = element.closest(
+                        'div[class*="col-"]');
+                    if (controls.find(':checkbox,:radio')
+                        .length > 1) controls.append(
+                        error);
+                    else error.insertAfter(element.nextAll(
+                        '.lbl:eq(0)').eq(0));
+                }
+                else if (element.is('.select2'))
+                {
+                    error.insertAfter(element.siblings(
+                        '[class*="select2-container"]:eq(0)'
+                    ));
+                }
+                else if (element.is('.chosen-select'))
+                {
+                    error.insertAfter(element.siblings(
+                        '[class*="chosen-container"]:eq(0)'
+                    ));
+                }
+                else error.insertAfter(element.parent());
+            },
+
+            submitHandler: function(form)
+            {
+                submitdata();
+            },
+            invalidHandler: function(form) {}
+        });
+
+    });
+    function submitEvent() {
+        $("#date2").val(new Date($("#date1").val()).toISOString())
+	var submitData=$('#validation-form').serialize();
+       
+        
+        var url = 'system/user/save';
+        $.ajax({
+            url: url,
+            timeout: 30000,
+            type: "POST",
+            data: submitData,
+            dataType: 'json',
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("An error has occurred making the request: " + errorThrown)
+            },
+            success: function (data) {
+                if (data.code == "0000") {
+                    closedialog_and_refreshdatatable("#dialogModal", "#table_user");
+                    return true;
+                } else {
+                    ace_alert("错误", data.message);
+                    return false;
+                }
+
+            }
+        });
+    }
+</script>

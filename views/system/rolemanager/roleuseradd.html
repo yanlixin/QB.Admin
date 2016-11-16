@@ -1,0 +1,59 @@
+<form class="form-horizontal" id="form1" method="POST">
+    
+    <div class="widget-box">
+        <div class="widget-header widget-header-blue widget-header-flat">
+            <h4>
+                <%.Model.Name%><input type="hidden" value="<%.Model.ID%>" name="Id" id="Id" >
+
+            </h4>
+        </div>
+        <div class="widget-body">
+            <div class="widget-main">
+
+
+
+                <div class="form-group">
+                    <div class="group">
+                        <label class="control-label col-xs-12 col-sm-2 no-padding-right"></label>
+
+                        <div class="col-xs-12 col-sm-8">
+                            <div class="clearfix">
+                                <select multiple="multiple" size="10" name="duallistbox_demo1[]" id="duallist">
+                                    <%range $key, $val := .Users%>
+                                    <option value="<% $val.Value%>" > <% $val.Text%></option>
+                                    <%end%>
+                                   
+                                </select>
+
+                                <!-- /section:plugins/input.duallist -->
+                                <div class="hr hr-16 hr-dotted"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="space-2"></div>
+
+
+
+        </div><!-- /.widget-main -->
+    </div><!-- /.widget-body -->
+
+</form>
+<script src="<%.cdn%>/js/jquery.bootstrap-duallistbox.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var demo1 = $('select[name="duallistbox_demo1[]"]').bootstrapDualListbox({
+            infoTextFiltered: '<span class="label label-purple label-lg">过滤</span>',
+            infoText: '',
+            selectorMinimalHeight:200
+        });
+
+    });
+  
+</script>

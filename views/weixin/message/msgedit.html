@@ -1,0 +1,204 @@
+<div class="widget-box">
+    <div class="widget-header widget-header-blue widget-header-flat">
+        <h4>
+            <%.Model.MenuName%><input type="hidden" id="menuID" value="<%.Model.MenuID%>" />
+        </h4>
+    </div>
+    <div class="widget-body">
+        <div class="widget-main">
+            <form class="form-horizontal" id="validation-form" method="POST">
+                <div class="form-group">
+                    <div class="group">
+                        <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="moduleID">发送类别:</label>
+
+                        <div class="col-xs-12 col-sm-4">
+                            <div class="clearfix">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="group">
+                        <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="menuName">接受人:</label>
+
+                        <div class="col-xs-12 col-sm-4">
+                            <div class="input-icon block col-xs-12 no-padding">
+                                <input maxlength="100" type="text" class="col-xs-12" name="subject" id="form-field-subject" placeholder="Subject">
+                                <i class="ace-icon fa fa-comment-o"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="group">
+                        <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="menuName">菜单名称:</label>
+
+                        <div class="col-xs-12 col-sm-4">
+
+                                                 <div class="wysiwyg-toolbar btn-toolbar center wysiwyg-style1"> <div class="btn-group">  <a class="btn btn-sm btn-default" data-edit="bold" title="" data-original-title="Bold (Ctrl/Cmd+B)"><i class=" ace-icon fa fa-bold"></i></a>  <a class="btn btn-sm btn-default" data-edit="italic" title="" data-original-title="Italic (Ctrl/Cmd+I)"><i class=" ace-icon fa fa-italic"></i></a>  <a class="btn btn-sm btn-default" data-edit="strikethrough" title="" data-original-title="Strikethrough"><i class=" ace-icon fa fa-strikethrough"></i></a>  <a class="btn btn-sm btn-default" data-edit="underline" title="" data-original-title="Underline"><i class=" ace-icon fa fa-underline"></i></a>  </div> <div class="btn-group">  <a class="btn btn-sm btn-default" data-edit="justifyleft" title="" data-original-title="Align Left (Ctrl/Cmd+L)"><i class=" ace-icon fa fa-align-left"></i></a>  <a class="btn btn-sm btn-default" data-edit="justifycenter" title="" data-original-title="Center (Ctrl/Cmd+E)"><i class=" ace-icon fa fa-align-center"></i></a>  <a class="btn btn-sm btn-default" data-edit="justifyright" title="" data-original-title="Align Right (Ctrl/Cmd+R)"><i class=" ace-icon fa fa-align-right"></i></a>  </div> <div class="btn-group">  <div class="btn-group"> <a class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" title="" data-original-title="Hyperlink"><i class=" ace-icon fa fa-link"></i></a>  <div class="dropdown-menu dropdown-caret dropdown-menu-right">                             <div class="input-group">                              <input class="form-control" placeholder="URL" type="text" data-edit="createLink">                               <span class="input-group-btn">                                  <button class="btn btn-sm btn-primary" type="button">Add</button>                               </span>                          </div>                     </div> </div> <a class="btn btn-sm btn-default" data-edit="unlink" title="" data-original-title="Remove Hyperlink"><i class=" ace-icon fa fa-chain-broken"></i></a>  </div> <div class="btn-group">  <a class="btn btn-sm btn-default" data-edit="undo" title="" data-original-title="Undo (Ctrl/Cmd+Z)"><i class=" ace-icon fa fa-undo"></i></a>  <a class="btn btn-sm btn-default" data-edit="redo" title="" data-original-title="Redo (Ctrl/Cmd+Y)"><i class=" ace-icon fa fa-repeat"></i></a>  </div>  </div> <div class="wysiwyg-editor" contenteditable="true"></div>
+                                            
+                        </div>
+                    </div>
+                </div>
+                <div class="space-2"></div>
+            </form>
+
+        </div>
+        <!-- /.widget-main -->
+    </div>
+    <!-- /.widget-body -->
+</div>
+
+<script src="<%.cdn%>/js/chosen.jquery.js"></script>
+<script>
+    function submitEvent()
+    {
+        if ($('#validation-form').valid())
+        {
+            var submitData = {
+                MenuID: parseInt($("#menuID").val()),
+                ModuleID: parseInt($("#moduleID").val()),
+                MenuPID: parseInt($("#menuPID").val()),
+                MenuName: $("#menuName").val(),
+                MenuIconUrl: $("#menuIconUrl").val(),
+                MenuNavUrl: $("#menuNavUrl").val(),
+                MenuDesc: $("#menuDesc").val(),
+                ActionID: $("#actionID").val(),
+                SortIndex: parseInt($("#sortIndex").val())
+
+            };
+            var url = "/weixin/mp/message/send";
+            $.post(url, JSON.stringify(submitData), function(data)
+            {
+                if (data.code == "0000") {
+                    closedialog_and_refreshdatatable("#dialogModal", "#table_role");
+                    return true;
+                } else {
+                    ace_alert("错误", data.message);
+                    return false;
+                }
+            });
+
+        }
+        else
+        {
+
+        }
+    }
+
+
+    jQuery(function($)
+    {
+        $('#validation-form').validate(
+        {
+            errorElement: 'div',
+            errorClass: 'help-block',
+            focusInvalid: false,
+            ignore: "",
+            rules:
+            {
+                moduleId:
+                {
+                    required: true,
+                },
+                menuPId:
+                {
+                    required: true,
+                },
+                menuName:
+                {
+                    required: true,
+                    maxlength: 128,
+                },
+                menuIconUrl:
+                {
+                    required: true,
+                    maxlength: 128,
+                },
+                menuNavUrl:
+                {
+                    required: true,
+                    maxlength: 128,
+                },
+                menuName:
+                {
+                    required: true,
+                    maxlength: 128,
+                },
+                roleDesc:
+                {
+                    required: true,
+                    maxlength: 256,
+                },
+                recordStatus:
+                {
+                    required: true,
+                }
+            },
+            messages:
+            {
+                roleName:
+                {
+                    required: "请输入角色名称.",
+                    maxlength: "角色名称最多只能输入128个字符.",
+                },
+                roleDesc:
+                {
+                    required: "请输入角色描述.",
+                    maxlength: "角色描述最多只能输入256个字符.",
+                },
+                userDisplayName: "请选择状态."
+            },
+
+
+            highlight: function(e)
+            {
+                $(e).closest('.group').removeClass(
+                    'has-info').addClass('has-error');
+            },
+
+            success: function(e)
+            {
+                $(e).closest('.group').removeClass(
+                    'has-error'); //.addClass('has-info');
+                $(e).remove();
+            },
+
+            errorPlacement: function(error, element)
+            {
+                if (element.is('input[type=checkbox]') ||
+                    element.is('input[type=radio]'))
+                {
+                    var controls = element.closest(
+                        'div[class*="col-"]');
+                    if (controls.find(':checkbox,:radio')
+                        .length > 1) controls.append(
+                        error);
+                    else error.insertAfter(element.nextAll(
+                        '.lbl:eq(0)').eq(0));
+                }
+                else if (element.is('.select2'))
+                {
+                    error.insertAfter(element.siblings(
+                        '[class*="select2-container"]:eq(0)'
+                    ));
+                }
+                else if (element.is('.chosen-select'))
+                {
+                    error.insertAfter(element.siblings(
+                        '[class*="chosen-container"]:eq(0)'
+                    ));
+                }
+                else error.insertAfter(element.parent());
+            },
+
+            submitHandler: function(form)
+            {
+                submitdata();
+            },
+            invalidHandler: function(form) {}
+        });
+    });
+</script>

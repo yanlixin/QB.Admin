@@ -1,0 +1,141 @@
+
+
+<div class="widget-box">
+    <div class="widget-header widget-header-blue widget-header-flat">
+        <h4>
+            <%.Model.Name%><input type="hidden" id="roleID" value="<%.Model.ID%>" />
+        </h4>
+    </div>
+    <div class="widget-body">
+        <div class="widget-main">
+
+            <form class="form-horizontal" id="validation-form" method="POST">
+                <div class="form-group">
+                    <div class="group">
+                        <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="roleName">角色名称:</label>
+
+                        <div class="col-xs-12 col-sm-4">
+                            <div class="clearfix">
+                                <input type="text" name="roleName" id="roleName" value="<%.Model.Name%>" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="group">
+                        <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="roleDesc">角色描述:</label>
+
+                        <div class="col-xs-12 col-sm-4">
+                            <div class="clearfix">
+                                <textarea rows="2" name="roleDesc" cols="20" id="roleDesc"  ><%.Model.Desc%></textarea>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group ">
+                    <div class="group">
+                        <label class="control-label col-xs-12 col-sm-2 no-padding-right" for="recordStatus">状态:</label>
+
+                        <div class="col-xs-12 col-sm-4">
+                            <div class="clearfix">
+    							<select class="input-medium" id="recordStatus" name="recordStatus" data-placeholder="请选择状态">
+    								<option value="0">正常</option>
+    								<option value="-1">已删除</option>
+    							</select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="space-2"></div>
+         </form>
+
+        </div><!-- /.widget-main -->
+    </div><!-- /.widget-body -->
+</div>
+
+<script src="<%.cdn%>/js/chosen.jquery.js"></script>
+<script >
+    function submitEvent(){
+	if ($('#validation-form').valid()) {
+        var submitData=$('#validation-form').serialize();
+        var url = "/system/role/save" ;
+        $.post(url,submitData, function (data) { 
+		        if (data.status=="OK") {
+                    closedialog_and_refreshdatatable("#dialogModal", "#table_role");
+                    return true;
+                } else {
+                    ace_alert("错误", data.message);
+                    return false;
+                }
+            });
+
+        } else {
+
+        }    
+    }
+
+    jQuery(function ($) {
+         $('#validation-form').validate({
+            errorElement: 'div',
+            errorClass: 'help-block',
+            focusInvalid: false,
+            ignore: "",
+            rules: {
+                roleName: {
+                    required: true,
+                    maxlength: 128,
+                },
+                roleDesc: {
+                    required: true,
+                    maxlength: 256,
+                },
+                recordStatus: {
+                    required: true,
+                }
+            },
+            messages: {
+                roleName: {
+                    required: "请输入角色名称.",
+                    maxlength: "角色名称最多只能输入128个字符.",
+                },
+                roleDesc: {
+                    required: "请输入角色描述.",
+                    maxlength: "角色描述最多只能输入256个字符.",
+                },
+                userDisplayName: "请选择状态."
+            },
+
+
+            highlight: function (e) {
+                $(e).closest('.group').removeClass('has-info').addClass('has-error');
+            },
+
+            success: function (e) {
+                $(e).closest('.group').removeClass('has-error'); //.addClass('has-info');
+                $(e).remove();
+            },
+
+            errorPlacement: function (error, element) {
+                if (element.is('input[type=checkbox]') || element.is('input[type=radio]')) {
+                    var controls = element.closest('div[class*="col-"]');
+                    if (controls.find(':checkbox,:radio').length > 1) controls.append(error);
+                    else error.insertAfter(element.nextAll('.lbl:eq(0)').eq(0));
+                } else if (element.is('.select2')) {
+                    error.insertAfter(element.siblings('[class*="select2-container"]:eq(0)'));
+                } else if (element.is('.chosen-select')) {
+                    error.insertAfter(element.siblings('[class*="chosen-container"]:eq(0)'));
+                } else error.insertAfter(element.parent());
+            },
+
+            submitHandler: function (form) {
+                submitdata();
+            },
+            invalidHandler: function (form) {
+            }
+        });
+    });
+
+</script>
+

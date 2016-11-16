@@ -1,0 +1,41 @@
+2015/09/14 08:11:51 [content.go:62] [E] pq: syntax error at or near "from"
+2015/09/14 08:11:51 [menus.go:40] [E] pq: relation "pa_menus" does not exist
+2015/09/14 08:11:51 [menus.go:17] [E] pq: relation "pa_menus" does not exist
+2015/09/14 08:12:52 [content.go:62] [E] pq: syntax error at or near "from"
+2015/09/14 08:12:52 [menus.go:40] [E] pq: relation "pa_menus" does not exist
+2015/09/14 08:12:52 [menus.go:17] [E] pq: relation "pa_menus" does not exist
+2015/09/14 08:17:11 [content.go:62] [E] pq: syntax error at or near "from"
+2015/09/14 08:17:11 [menus.go:40] [E] pq: relation "pa_menus" does not exist
+2015/09/14 08:17:11 [menus.go:17] [E] pq: relation "pa_menus" does not exist
+2015/09/14 08:19:46 [content.go:62] [E] pq: syntax error at or near "from"
+2015/09/14 08:19:46 [menus.go:40] [E] pq: relation "pa.menus" does not exist
+2015/09/14 08:19:46 [menus.go:17] [E] pq: relation "pa.menus" does not exist
+2015/09/14 08:20:31 [content.go:62] [E] pq: syntax error at or near "from"
+2015/09/14 08:20:31 [menus.go:40] [E] pq: relation "pa.menus" does not exist
+2015/09/14 08:20:31 [menus.go:17] [E] pq: relation "pa.menus" does not exist
+2015/09/14 08:23:07 [content.go:62] [E] pq: syntax error at or near "from"
+2015/09/14 08:23:07 [menus.go:40] [E] pq: relation "pa.menus" does not exist
+2015/09/14 08:23:07 [menus.go:17] [E] pq: relation "pa.menus" does not exist
+2015/09/14 08:26:28 [content.go:62] [E] pq: syntax error at or near "from"
+2015/09/14 08:26:28 [menus.go:40] [E] pq: relation "pa.menus" does not exist
+2015/09/14 08:26:28 [menus.go:17] [E] pq: relation "pa.menus" does not exist
+2015/09/14 08:28:43 [content.go:62] [E] pq: syntax error at or near "from"
+2015/09/14 08:28:43 [menus.go:40] [E] pq: relation "pa.menus" does not exist
+2015/09/14 08:28:43 [menus.go:17] [E] pq: relation "pa.menus" does not exist
+2015/09/14 08:35:10 [content.go:62] [E] pq: syntax error at or near "from"
+2015/09/14 08:35:10 [menus.go:40] [E] pq: relation "menus" does not exist
+2015/09/14 08:48:18 [content.go:62] [E] pq: syntax error at or near "from"
+2015/09/14 08:48:18 [menus.go:40] [E] pq: relation "pa.menus" does not exist
+2015/09/14 08:48:18 [menus.go:17] [E] pq: relation "pa.menus" does not exist
+2015/09/14 09:26:36 [content.go:62] [E] pq: syntax error at or near "from"
+2015/09/14 09:26:36 [menus.go:40] [E] pq: column "MenuID" of relation "pa_menus" does not exist
+2015/09/14 09:29:10 [content.go:62] [E] pq: syntax error at or near "from"
+2015/09/14 09:29:10 [menus.go:40] [E] pq: column "ModuleID" of relation "pa_menus" does not exist
+2015/09/14 09:32:32 [content.go:63] [E] pq: syntax error at or near "from"
+2015/09/14 09:32:32 [menus.go:40] [E] pq: column "MenuID" of relation "pa_menus" does not exist
+2015/09/14 09:39:00 [content.go:63] [E] pq: syntax error at or near "from"
+2015/09/14 09:39:00 [menus.go:40] [E] no LastInsertId available
+2015/09/14 09:40:26 [content.go:63] [E] pq: syntax error at or near "from"
+2015/09/14 09:40:26 [menus.go:40] [E] pq: duplicate key value violates unique constraint "pa_menus_pkey"
+2015/09/14 09:40:53 [content.go:63] [E] pq: syntax error at or near "from"
+2015/09/14 09:40:53 [menus.go:40] [E] no LastInsertId available

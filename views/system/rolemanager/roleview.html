@@ -1,0 +1,150 @@
+
+        <div class="page-header">
+		<h1>角色信息
+	</div>
+            <div class="row">
+                <div class="col-xs-12">
+
+                    <div class="tabbable">
+                        <!--tab header 开始-->
+                        <ul class="nav nav-tabs" id="myTab">
+                            <li class="active">
+                                <a data-toggle="tab" href="#home">
+                                    <i class="green ace-icon fa fa-home bigger-120"></i>
+                                    基本信息
+                                </a>
+                            </li>
+                            <li>
+                                <a data-toggle="tab" href="#role">
+                                    <i class="green ace-icon fa fa-home bigger-120"></i>
+                                   用户信息
+                                </a>
+                            </li>
+                        </ul>
+                        <!--tab header 结束-->
+                    </div>
+
+                    <div class="tab-content">
+                        <div id="home" class="tab-pane fade in active">
+                            <div class="row">
+                                <div class="widget-body">
+                                    <div class="widget-main">
+                                        <div class="row">
+                                           
+                                            <div class="col-xs-12 col-sm-9">
+
+                                            <div class="profile-user-info">
+                                                <div class="profile-info-row">
+                                                    <div class="profile-info-name"> 角色标识 </div>
+
+                                                    <div class="profile-info-value">
+                                                        <span><%.Model.ID%></span>
+                                                    </div>
+                                                </div>
+                                                <div class="profile-info-row">
+                                                    <div class="profile-info-name"> 角色名称 </div>
+
+                                                    <div class="profile-info-value">
+                                                        <span><%.Model.Name%></span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="profile-info-row">
+                                                    <div class="profile-info-name"> 角色描述 </div>
+
+                                                    <div class="profile-info-value">
+                                                        <span><%.Model.Desc%></span>
+                                                    </div>
+                                                </div>
+                                                <div class="profile-info-row">
+                                                    <div class="profile-info-name"> 状态 </div>
+
+                                                    <div class="profile-info-value">
+                                                        <span></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="hr hr-8 dotted"></div>
+                                        </div><!-- /.col -->
+                                           
+                                        </div>  
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div id="role" class="tab-pane fade">
+                            <div class="row">
+                                <div class="col-xs-12" id="roleUserGrid">
+                                </div>
+                                <div>
+                                    <div class="hide" id="priceDialog" tabindex="-1"></div><!-- /.modal -->
+                                </div>
+                            </div>
+                        </div>
+
+                      
+
+                    </div>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+<script type="text/javascript">
+$(document).ready(function(){
+        var id=<%.Model.RoleID%>;
+        $("#btnEdit").bind("click",function(){showEdit(id); });
+        $("#btnDelete").bind("click",function(){
+            ace_alert("msg","title")
+        });
+
+        var columns =[
+                { "mData": "UserID","mTitle":"ID","bSortable": false,"sClass": "text-center", "width": "15%"},
+                { "mData": "UserName","mTitle":"用户名称","bSortable": false, "width": "70%"},
+                {
+                    "mData": "UserID","mTitle":"", "bSortable": false,"sClass": "text-center","width":"15%",
+                    "mRender": function (data, type, full) {
+                        
+                        var result= '<button class="btn btn-danger btn-minier" onclick=showView(' + data + ')><i class="icon-plus " />删除</button>';
+                       
+                        return result;
+                    }	
+		}
+            ];
+      
+        var config= {
+            name: "userGrid", 
+            tableId: "table_user",
+            title: "用户", 
+            btnNewTitle: "新增", 
+            columns: columns, 
+            displayLength: 5,
+            doNew:function () {
+                var opt={
+                    url:"/system/user/edit/0",
+                    title:'用户编辑',
+                    btns: [
+                        {
+                            "text": "保存并关闭",
+                            "class": "btn btn-success",
+                            "click": function () {
+                                submitEvent(false);
+                            }
+                        },
+                        {
+                            "text": "保存",
+                            "class": "btn btn-primary",
+                            "click": function () {
+                                submitEvent(true);
+                            }
+                        }
+                    ]
+                };
+                $.ui.easydialog(opt).showDialog()
+            },
+            ajaxSource: "/system/role/users/json"
+        };
+        React.render(React.createElement(DataGrid,config), document.getElementById('roleUserGrid'));
+
+    });
+    
+</script>

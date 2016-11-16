@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="utf-8" />
+    <title>
+        <%.AppTitle %>
+    </title>
+    <%.Head%>
+</head>
+
+<body class="no-skin">
+    <!-- #section:basics/navbar.layout -->
+    <%.Topbar%>
+        <!-- /section:basics/navbar.layout -->
+        <div class="main-container" id="main-container">
+            <script type="text/javascript">
+                try
+                {
+                    ace.settings.check('main-container', 'fixed')
+                }
+                catch (e)
+                {}
+            </script>
+            <!-- #section:basics/sidebar -->
+            <%.Sidebar%>
+                <!-- /section:basics/sidebar -->
+                <div class="main-content">
+                    <div class="main-content-inner">
+                        <!-- #section:basics/content.breadcrumbs -->
+                        <div class="breadcrumbs" id="breadcrumbs">
+                            <script type="text/javascript">
+                                try
+                                {
+                                    ace.settings.check('breadcrumbs', 'fixed')
+                                }
+                                catch (e)
+                                {}
+                            </script>
+
+                            <ul class="breadcrumb">
+                                <li>
+                                    <i class="ace-icon fa fa-home home-icon"></i>
+                                    <a href="/home">Home</a>
+                                </li>
+
+                                <li>
+                                    <a href="#">Forms</a>
+                                </li>
+                                <li class="active">Form Elements 2</li>
+                            </ul>
+                            <!-- /.breadcrumb -->
+
+                            <!-- #section:basics/content.searchbox -->
+                            <div class="nav-search" id="nav-search">
+                                <form class="form-search">
+                                    <span class="input-icon">
+									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<i class="ace-icon fa fa-search nav-search-icon"></i>
+								</span>
+                                </form>
+                            </div>
+                            <!-- /.nav-search -->
+
+                            <!-- /section:basics/content.searchbox -->
+                        </div>
+
+                        <!-- /section:basics/content.breadcrumbs -->
+
+                        <div class="page-content" id="MainPageContainer">
+                            <%.LayoutContent%>
+                        </div>
+                        <!-- /.page-content -->
+                    </div>
+                    <!-- /.main-content-inner -->
+                </div>
+                <!-- /.main-container -->
+                <!-- .mesasge-container -->
+                <div>
+                    <div id="alert-dialog-message" class="hide" tabindex="-1">
+                        <p id="alertMsg" class="alert alert-info">
+                        </p>
+                    </div>
+                </div>
+
+                <div>
+                    <div id="confirm-dialog-message" class="hide" tabindex="-1">
+                        <p id="confirmMsg" class="alert alert-info">
+                        </p>
+                    </div>
+                </div>
+                <!-- /.mesasge-container -->
+        </div>
+
+
+        <!-- basic scripts -->
+        <%.Scripts%>
+
+</body>
+
+</html>

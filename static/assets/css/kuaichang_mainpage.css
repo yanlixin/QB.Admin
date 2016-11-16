@@ -1,0 +1,39 @@
+﻿.cus-infobox-container {
+  text-align: center;
+  font-size: 0;
+}
+.cus-infobox {
+  display: inline-block;
+  height: 66px;
+  color: #555;
+  background-color: #FFF;
+  box-shadow: none;
+  border-radius: 0;
+  margin: -1px 0 0 -1px;
+  padding: 8px 3px 6px 9px;
+  border: 1px dotted;
+  border-color: #D8D8D8 !important;
+  vertical-align: middle;
+  text-align: left;
+  position: relative;
+}
+
+.cus-infobox > .cus-infobox-icon {
+  display: inline-block;
+  vertical-align: top;
+  width: 44px;
+}
+
+.cus-infobox > .cus-infobox-icon > .ace-icon {
+  display: inline-block;
+  height: 42px;
+  margin: 0;
+  padding: 1px 1px 0 2px;
+  background-color: transparent;
+  border-width: 0;
+  text-align: center;
+  position: relative;
+  border-radius: 100%;
+  -webkit-box-shadow: 1px 1px 0 rgba(0,0,0,0.2);
+  box-shadow: 1px 1px 0 rgba(0,0,0,0.2);
+}
